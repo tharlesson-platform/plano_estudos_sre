@@ -1,12 +1,19 @@
-# Trilhas SRE por N?vel
+# Trilhas SRE por Nivel
 
 Arquivos derivados do PDF original:
 
-- [SRE J?nior](./junior.md)
+- [SRE Junior](./junior.md)
 - [SRE Pleno](./pleno.md)
-- [SRE S?nior](./senior.md)
+- [SRE Senior](./senior.md)
 - [SRE Especialista / Arquiteto](./especialista.md)
 
 Arquivo fonte:
 
 - [Plano completo em PDF](./plano-estudos-sre.pdf)
+
+Labs sugeridos por nivel:
+
+- Junior: `observabilidade`, `backup-restore-validator`, `incident-timeline-builder`
+- Pleno: `terraform-modules`, `terraform-import`, `terraform-pr-risk-analyzer`, `atlantis`
+- Senior: `argocd`, `karpenter`, `slo-factory`, `platform-scorecard`
+- Especialista: `sre-automations`, `aws-sre-doctor`, `runbook-executor`, `workspace-tools`
