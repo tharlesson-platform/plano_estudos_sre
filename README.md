@@ -308,6 +308,54 @@ Além do PDF, o conteúdo também foi segmentado em arquivos por nível:
 
 ---
 
+## Labs práticos por nível
+
+Uma forma mais útil de estudar este material é conectar cada etapa a repositórios reais desta workspace:
+
+- Júnior:
+  - `observabilidade`
+  - `backup-restore-validator`
+  - `incident-timeline-builder`
+- Pleno:
+  - `terraform-modules`
+  - `terraform-import`
+  - `terraform-pr-risk-analyzer`
+  - `atlantis`
+- Sênior:
+  - `argocd`
+  - `karpenter`
+  - `slo-factory`
+  - `platform-scorecard`
+- Especialista:
+  - `sre-automations`
+  - `aws-sre-doctor`
+  - `runbook-executor`
+  - `workspace-tools`
+
+---
+
+## Plano 30/60/90 dias
+
+### 30 dias
+
+- consolidar fundamentos de Linux, redes, observabilidade e SRE
+- rodar labs de `observabilidade` e `backup-restore-validator`
+- revisar incidentes simples com `incident-timeline-builder`
+
+### 60 dias
+
+- aprofundar Terraform, GitOps e automação operacional
+- estudar `terraform-modules`, `terraform-import` e `terraform-pr-risk-analyzer`
+- praticar revisão de risco e deploys controlados com `atlantis`
+
+### 90 dias
+
+- integrar confiabilidade, plataforma e automações fim a fim
+- montar cenário com `argocd`, `karpenter`, `slo-factory` e `platform-scorecard`
+- fechar o ciclo com `sre-automations`, `aws-sre-doctor` e `runbook-executor`
+
+---
+
 ## Como este repositório pode evoluir
 
 Algumas melhorias futuras para este material:
@@ -323,6 +371,7 @@ Algumas melhorias futuras para este material:
   - automação
   - incident response
 - incluir labs práticos e projetos de portfólio
+- publicar versão web integrada ao `portfolio`
 
 ---
 
