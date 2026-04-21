@@ -1,0 +1,57 @@
+<!-- managed-by: codex-org-guardrails -->
+name: guardrails
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  guardrails:
+    name: guardrails
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate baseline files and workflow refs
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          import sys
+
+          missing = []
+          if not any(Path(path).exists() for path in ('.github/CODEOWNERS', 'CODEOWNERS', 'docs/CODEOWNERS')):
+              missing.append('CODEOWNERS')
+          if not any(Path(path).exists() for path in ('.github/dependabot.yml', '.github/dependabot.yaml')):
+              missing.append('.github/dependabot.yml')
+          if missing:
+              print('Missing required baseline files: ' + ', '.join(missing))
+              sys.exit(1)
+
+          floating_refs = []
+          workflow_dir = Path('.github/workflows')
+          if workflow_dir.exists():
+              for workflow in workflow_dir.glob('*.y*ml'):
+                  for index, line in enumerate(workflow.read_text(encoding='utf-8').splitlines(), start=1):
+                      match = re.search(r'\buses:\s*([^\s#]+)', line)
+                      if not match:
+                          continue
+                      ref = match.group(1)
+                      if ref.startswith('./'):
+                          continue
+                      if re.search(r'@(main|master|head|latest|trunk)$', ref, re.IGNORECASE):
+                          floating_refs.append(f'{workflow}:{index}:{ref}')
+          if floating_refs:
+              print('Disallowed floating workflow refs found:')
+              for entry in floating_refs:
+                  print(entry)
+              sys.exit(1)
+
+          print('Guardrails baseline validated successfully.')
+          PY
