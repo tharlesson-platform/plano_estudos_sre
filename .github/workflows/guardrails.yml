@@ -16,7 +16,7 @@ jobs:
     name: guardrails
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Validate baseline files and workflow refs
         shell: bash
         run: |
