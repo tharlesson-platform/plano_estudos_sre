@@ -14,13 +14,34 @@ permissions:
 jobs:
   guardrails:
     name: guardrails
-    runs-on: ubuntu-latest
+    runs-on: ["plano-estudos-sre-run-${{ github.run_id }}"]
+    timeout-minutes: 10
+    env:
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          persist-credentials: false
+      - name: Verify exact source and isolated guest
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_SHA" =~ ^[a-f0-9]{40}$ ]]
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -f /opt/isolation-base-ready
+          test "$(uname -s)" = Linux
+          test "$(uname -m)" = aarch64
+          test -z "${SSH_AUTH_SOCK:-}"
+          test -z "${LOCAL_ARTIFACT_TOKEN:-}"
+          test -z "${LOCAL_ARTIFACT_URL:-}"
+          mounts=$(findmnt --raw --noheadings --output FSTYPE)
+          test -n "$mounts"
+          if grep -Eq '^(9p|virtiofs)$' <<< "$mounts"; then exit 1; fi
       - name: Validate baseline files and workflow refs
         shell: bash
         run: |
-          python - <<'PY'
+          python3 - <<'PY'
           from pathlib import Path
           import re
           import sys

@@ -8,6 +8,15 @@ Este material foi estruturado para ajudar na evolução técnica em confiabilida
 
 ## Visão geral
 
+O gate `guardrails` executa em uma VM ARM64 local e efêmera, com label exclusiva
+por run e checkout do SHA exato. Mantém as verificações de CODEOWNERS,
+Dependabot e referências das actions. Não recebe credenciais de artifacts,
+agente SSH ou montagens do host. A execução aguarda a admissão explícita do
+head, workflow e base pelo controlador local; não usa fallback hospedado.
+A principal deste repositório é `master`, inclusive para validação e merge
+das PRs. O novo perfil precisa de revisão independente e aceite remoto antes
+da integração; nenhuma licença ou serviço pago é habilitado por esse gate.
+
 O objetivo deste repositório é reunir uma trilha clara de aprendizado para quem quer evoluir na carreira de SRE, passando pelos níveis:
 
 - **SRE Júnior**
